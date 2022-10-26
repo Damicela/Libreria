@@ -1,4 +1,9 @@
-
+let book = {
+  titulo: '',
+  portada: '',
+  autor: '',
+  id: ''
+};
 let books = [
   {
     id: Math.random(),
@@ -23,6 +28,55 @@ let books = [
     titulo: 'Mercaderes del espacio',
     portada: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4UjRdnHpUFFl_bB9gX9ON6Lad_aw3Z9It3A&usqp=CAU',
     autor: 'frederik phol'
+  },
+  {
+    id: Math.random(),
+    titulo: 'El Evangelio segun Jesucristo',
+    portada: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_lr49f39Eru2Lg-qQDzfibMjSlehgl5s8ahUylxnPQDoHoegQB9l_sfwOVqhGl8xr_9Y&usqp=CAU',
+    autor: 'Jose Saramago'
+  },
+  {
+    id: Math.random(),
+    titulo: 'El Hombre Duplicado',
+    portada: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0-8r5rP9Eawx-YLfgYaO1-KiDE-we4ZX09Q&usqp=CAU',
+    autor: 'Jose Saramago'
+  },
+  {
+    id: Math.random(),
+    titulo: 'El juego del angel',
+    portada: 'https://images.cdn1.buscalibre.com/fit-in/360x360/a1/c7/a1c73d662f3dae27d7e3ae0f50642d57.jpg',
+    autor: 'Carlos Ruiz Safón'
+  },
+  {
+    id: Math.random(),
+    titulo: 'El prisionero del cielo',
+    portada: 'https://m.media-amazon.com/images/I/91sis2MDQbL.jpg',
+    autor: 'Carlos Ruiz Safón'
+  },
+  {
+    id: Math.random(),
+    titulo: 'El Laberinto de los Espíritus',
+    portada: 'https://images-na.ssl-images-amazon.com/images/I/91T05xND0ZL._AC_UL600_SR600,600_.jpg',
+    autor: 'Carlos Ruiz Safón'
+  },
+  {
+    id: Math.random(),
+    titulo: 'Todos los nombres',
+    portada: 'https://www.euroresidentes.com/libros/novelas/images/todos_los_nombres.jpg',
+    autor: 'Jose Saramago'
+  },
+  {
+    id: Math.random(),
+    titulo: 'La caverna',
+    portada: 'https://imagessl0.casadellibro.com/a/l/t5/40/9788466369640.jpg',
+    autor: 'Jose Saramago'
+  },
+  
+  {
+    id: Math.random(),
+    titulo: 'El Padrino',
+    portada: 'https://m.media-amazon.com/images/I/415tHoDHibL.jpg',
+    autor: 'Mario Puzzo'
   }
 ];
 
@@ -50,36 +104,37 @@ const crearHtml = (item) => {
   return html
 }
 
-const insertBooks = () => {
+const insertBooks = (galery) => {
   let div = document.getElementById('libreria');
   div.innerHTML = ''
   let stock = '';
-  books.forEach(libro => {
+  galery.forEach(libro => {
     stock += crearHtml(libro);
   })
   div.innerHTML = stock;
+  foundAuthors();
 }
 
 let objLibro = '';
 let btnGet;
-let book = {
-  titulo: '',
-  portada: '',
-  autor: '',
-  id: ''
-};
+
+
 
 const handlerClickBtnget = () => {
+
   let newbook = { ...objLibro }
   newbook.portada = document.getElementById("url").value;
   newbook.titulo = document.getElementById("title").value;
   newbook.autor = document.getElementById("autor").value;
+
   books.push(newbook);
-  insertBooks();
+  insertBooks(books);
   document.getElementById("url").value = '';
   document.getElementById("title").value = '';
   document.getElementById("autor").value = '';
+
 }
+
 
 const updateModal = new bootstrap.Modal(document.getElementById('updateBook'), {})
 
@@ -97,12 +152,12 @@ const handlerShowUpdateModal = (id) => {
 
 const handlerClickUpdateItem = () => {
   books = books.filter(book => book.id !== idBookToUpdate);
-  let newbook = { ...objLibro, id : idBookToUpdate }
+  let newbook = { ...objLibro, id: idBookToUpdate }
   newbook.portada = document.getElementById("urlUpdate").value;
   newbook.titulo = document.getElementById("titleUpdate").value;
   newbook.autor = document.getElementById("autorUpdate").value;
   books.push(newbook);
-  insertBooks();
+  insertBooks(books);
 }
 
 let idBooKToDelete = 0;
@@ -119,30 +174,84 @@ const handlerShowDeleteModal = (id) => {
 const handlerClickDeleteItem = () => {
   books = books.filter(book => book.id !== idBooKToDelete);
   deleteModal.toggle()
-  insertBooks();
+  insertBooks(books);
 }
 
 const addBook = () => {
-  const addBookModal = new bootstrap.Modal(document.getElementById('addModal'), {}) 
+  const addBookModal = new bootstrap.Modal(document.getElementById('addModal'), {})
   addBookModal.toggle();
-  insertBooks();
-
-}
-const searchBook = (event) => {
-  if(event === ''){
-    insertBooks();
+  if (document.getElementById("url").value === '' ||
+    document.getElementById("title").value === '' ||
+    document.getElementById("autor").value === ''
+  ) {
+    const btnGet = document.getElementById("btnGet");
+    btnGet.disabled = true;
   }
-  
-  let filteredBook = books.filter(book => book.titulo.toLowerCase().includes(event) || book.autor.toLowerCase().includes(event));
-  let div = document.getElementById('libreria');
-  div.innerHTML = ''
-  let stock = '';
-  filteredBook.forEach(libro => {
-    stock += crearHtml(libro);
-  })
-  div.innerHTML = stock;
+
 }
 
-insertBooks();
+
+const checkIfCanSaveBook = () => {
+  const btnGet = document.getElementById("btnGet");
+  btnGet.disabled = document.getElementById("url").value === '' ||
+  document.getElementById("title").value === '' ||
+  document.getElementById("autor").value === ''
+}
+
+
+const searchBook = (event) => {
+  if (event === '') {
+    insertBooks(books);
+  }
+  let filteredBook = books.filter(book => book.titulo.toLowerCase().includes(event) || book.autor.toLowerCase().includes(event));
+  insertBooks(filteredBook);
+
+}
+
+
+const foundAuthors = () => {
+  const authorFounded = books.reduce((acc, book) => {
+    acc[book.autor] = ++acc[book.autor] || 1;
+    return acc;
+  }, {});
+  console.log(authorFounded);
+let authorName = Object.keys(authorFounded);
+let numberBook = Object.values(authorFounded); 
+console.log(numberBook);
+console.log(authorName);
+let div = document.getElementById('authors');
+div.innerHTML = '';
+let stock = '';
+for(let i = 0; i < authorName.length; i++){
+  stock+= listAuthor(authorName[i], numberBook[i] )
+}
+div.innerHTML = stock;
+
+}
+
+
+const listAuthor = (key, value) => {
+
+  let authorsList = `<a id="${Math.random()}" class="list-group-item d-flex justify-content-between align-items-center" href="#${getIdAuthor()}" onclick="getIdAuthor(${Math.random()})">
+  ${key}
+    <span class="badge bg-primary rounded-pill">${value}</span>
+  </a>`
+
+  return authorsList;
+}
+
+const getIdAuthor = (name) => {
+
+console.log();
+
+
+
+return 
+}
+
+
+insertBooks(books);
+
+
 
 
