@@ -1,6 +1,4 @@
 body {
- margin-top: 10px;
- margin-left: 10px;
   background-color: rgb(232, 135, 135);
 }
 
@@ -11,5 +9,7 @@ img {
 .card-img-top {
   height: 20em;
 }
+
+
 
 

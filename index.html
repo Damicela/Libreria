@@ -14,9 +14,27 @@
     <link rel="stylesheet" href="index.css" type="text/css" />
   </head>
   <body>
-   
-    <div class="container d-flex justify-content-between" id="header">
-      <div class="input-group mb-3 flex-nowrap w-auto">
+   <nav class="navbar navbar-expand-lg mb-5" style="background-color: #f0adad;">
+    <div class="container-fluid d-flex" id="header">
+      <ul class="nav nav-tabs">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" data-bs-auto-close="false" onclick="btnClear()">Authors</a>
+          <ul id="authors" class="dropdown-menu">
+            <li>
+              <button type="submit" class="btn btn-secondary mt-1" onclick="btnClear()">clear</button>
+            </li>
+        
+          </ul>
+          
+        </li>
+      <li class="nav-item">
+        <a id="lectores" class="nav-link" href="lectores.html">readers</a>
+      </li>
+      <li class="nav-item">
+        <a onclick="addBook()" class="nav-link">add book</a>
+      </li>
+    </ul>
+      <div class="input-group mb-3 flex-nowrap w-auto justify-content-md-end">
         <span class="input-group-text" id="addon-wrapping"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -41,11 +59,13 @@
         />
       </div>
 
-      <div>
-        <button onclick="addBook()" class="btn btn-primary">add book</button>
-      </div>
+    
     </div>
-
+   </nav>
+    
+    
+  
+<div>
     <div
       class="modal fade"
       id="addModal"
@@ -119,13 +139,7 @@
       </div>
     </div>
 
-    <div class="d-flex">
-    <div>
-      <ul id="authors" class="list-group">
-        
-      </ul>
-    </div>
-
+    <div class="container-fluid d-flex">
     <div
       id="libreria"
       class="container d-flex justify-content-between flex-wrap"
@@ -225,7 +239,8 @@
         </div>
       </div>
     </div>
-   
+  </div>
+  
 
     <script
       type="text/javaScript"

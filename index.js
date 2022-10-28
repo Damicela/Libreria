@@ -71,7 +71,7 @@ let books = [
     portada: 'https://imagessl0.casadellibro.com/a/l/t5/40/9788466369640.jpg',
     autor: 'Jose Saramago'
   },
-  
+
   {
     id: Math.random(),
     titulo: 'El Padrino',
@@ -194,8 +194,8 @@ const addBook = () => {
 const checkIfCanSaveBook = () => {
   const btnGet = document.getElementById("btnGet");
   btnGet.disabled = document.getElementById("url").value === '' ||
-  document.getElementById("title").value === '' ||
-  document.getElementById("autor").value === ''
+    document.getElementById("title").value === '' ||
+    document.getElementById("autor").value === ''
 }
 
 
@@ -215,40 +215,42 @@ const foundAuthors = () => {
     return acc;
   }, {});
   console.log(authorFounded);
-let authorName = Object.keys(authorFounded);
-let numberBook = Object.values(authorFounded); 
-console.log(numberBook);
-console.log(authorName);
-let div = document.getElementById('authors');
-div.innerHTML = '';
-let stock = '';
-for(let i = 0; i < authorName.length; i++){
-  stock+= listAuthor(authorName[i], numberBook[i] )
-}
-div.innerHTML = stock;
+  let authorName = Object.keys(authorFounded);
+  let numberBook = Object.values(authorFounded);
+  console.log(numberBook);
+  console.log(authorName);
+  let div = document.getElementById('authors');
+  div.innerHTML = '';
+  let stock = '';
+  for (let i = 0; i < authorName.length; i++) {
+    stock += listAuthor(authorName[i], numberBook[i])
+  }
+  div.innerHTML = stock;
 
 }
 
 
 const listAuthor = (key, value) => {
 
-  let authorsList = `<a id="${Math.random()}" class="list-group-item d-flex justify-content-between align-items-center" href="#${getIdAuthor()}" onclick="getIdAuthor(${Math.random()})">
+  let authorsList = `<li onclick="getAuthorCollection('${key}')"><a id="${key}" class="dropdown-item d-flex justify-content-between">
   ${key}
     <span class="badge bg-primary rounded-pill">${value}</span>
-  </a>`
+  </a></li>`
 
   return authorsList;
 }
 
-const getIdAuthor = (name) => {
+const getAuthorCollection = (name) => {
+  let filteredBook = books.filter(book => book.autor === name);
+  insertBooks(filteredBook);
 
-console.log();
-
-
-
-return 
+  let listToActive = document.getElementById(name);
+  listToActive.classList.add("active");
 }
 
+const btnClear = () => {
+  insertBooks(books);
+}
 
 insertBooks(books);
 
